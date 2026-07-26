@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: exec_assistant_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: exec_assistant
+      POSTGRES_PASSWORD: exec_assistant
+      POSTGRES_DB: exec_assistant
+    ports:
+      - "5432:5432"
+    volumes:
+      - exec_assistant_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U exec_assistant"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  exec_assistant_pgdata:
