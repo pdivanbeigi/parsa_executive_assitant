@@ -9,7 +9,9 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        // Use IPv4 explicitly — macOS often resolves "localhost" to ::1 while
+        // the API binds to 127.0.0.1, which makes login look like a bad password.
+        target: 'http://127.0.0.1:8000',
         changeOrigin: true,
       },
     },

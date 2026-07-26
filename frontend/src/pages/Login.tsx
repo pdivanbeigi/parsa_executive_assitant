@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { isAxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
@@ -17,8 +18,14 @@ export default function Login() {
     try {
       await login(username, password);
       navigate("/", { replace: true });
-    } catch {
-      setError("Invalid username or password.");
+    } catch (err) {
+      if (isAxiosError(err) && !err.response) {
+        setError("Cannot reach the API. Is the backend running on port 8000?");
+      } else if (isAxiosError(err) && typeof err.response?.data?.detail === "string") {
+        setError(err.response.data.detail);
+      } else {
+        setError("Invalid username or password.");
+      }
     } finally {
       setSubmitting(false);
     }

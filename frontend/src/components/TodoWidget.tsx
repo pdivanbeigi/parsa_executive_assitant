@@ -1,4 +1,4 @@
-import { useState, type FormEvent, type KeyboardEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
 import { todosApi } from "../api/todos";
@@ -45,19 +45,15 @@ export default function TodoWidget() {
     onSuccess: invalidate,
   });
 
-  function handleSubmit(e?: FormEvent) {
-    e?.preventDefault();
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
     const trimmed = title.trim();
-    if (!trimmed) return;
+    if (!trimmed || createMutation.isPending) return;
     createMutation.mutate({
       title: trimmed,
       priority,
       due_date: dueDate || null,
     });
-  }
-
-  function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
-    if (e.key === "Enter") handleSubmit();
   }
 
   const openCount = todos.filter((t) => !t.completed).length;
@@ -86,7 +82,6 @@ export default function TodoWidget() {
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          onKeyDown={handleKeyDown}
           placeholder="Add a to-do..."
           className="min-w-[200px] flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm"
         />

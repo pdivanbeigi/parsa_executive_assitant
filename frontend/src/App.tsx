@@ -9,6 +9,7 @@ import MeetingList from "./pages/MeetingList";
 import MeetingEditor from "./pages/MeetingEditor";
 import TeamSettings from "./pages/TeamSettings";
 import Integrations from "./pages/Integrations";
+import Insight from "./pages/Insight";
 import WhiteboardList from "./pages/WhiteboardList";
 import WhiteboardEditor from "./pages/WhiteboardEditor";
 
@@ -40,6 +41,7 @@ function App() {
               <Route path="/meetings/:meetingId" element={<MeetingEditor />} />
               <Route path="/team" element={<TeamSettings />} />
               <Route path="/integrations" element={<Integrations />} />
+              <Route path="/insight" element={<Insight />} />
               <Route path="/whiteboards" element={<WhiteboardList />} />
               <Route path="/whiteboards/:whiteboardId" element={<WhiteboardEditor />} />
             </Route>

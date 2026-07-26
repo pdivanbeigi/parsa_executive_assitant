@@ -110,6 +110,112 @@ export interface Todo {
   updated_at: string;
 }
 
+export interface SlideTheme {
+  preset: string;
+  accent: string;
+  header_bg: string;
+  header_text: string;
+  page_bg: string;
+  card_bg: string;
+  text: string;
+  muted: string;
+  done_accent: string;
+  will_accent: string;
+  comments_accent: string;
+}
+
+export interface SlideSection {
+  id: string;
+  title: string;
+  items: string[];
+  accent: string;
+}
+
+export interface SlideTemplate {
+  eyebrow: string;
+  footer: string;
+  show_eyebrow: boolean;
+  show_footer: boolean;
+  columns: number;
+  card_style: "bordered" | "filled" | "minimal" | string;
+  title_size: "sm" | "md" | "lg" | string;
+}
+
+export interface StatusSlide {
+  id: number;
+  title: string;
+  period_label: string | null;
+  author: string | null;
+  sections: SlideSection[];
+  template: SlideTemplate;
+  done_items: string[];
+  will_do_items: string[];
+  comments: string[];
+  theme: SlideTheme;
+  notes: string | null;
+  pdf_path: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export type StatusSlideInput = {
+  title: string;
+  period_label?: string | null;
+  author?: string | null;
+  sections: SlideSection[];
+  template: SlideTemplate;
+  done_items?: string[];
+  will_do_items?: string[];
+  comments?: string[];
+  theme: SlideTheme;
+  notes?: string | null;
+};
+
+export interface CountBucket {
+  label: string;
+  count: number;
+}
+
+export interface InsightSummary {
+  generated_on: string;
+  kpis: {
+    meetings: number;
+    action_items_open: number;
+    action_items_overdue: number;
+    todos_open: number;
+    todos_overdue: number;
+    team_members: number;
+  };
+  action_items_by_status: CountBucket[];
+  action_items_by_assignee: CountBucket[];
+  todos_by_priority: CountBucket[];
+  todos_by_status: CountBucket[];
+  meetings_by_month: CountBucket[];
+  recent_meetings: {
+    id: number;
+    title: string;
+    meeting_date: string;
+    status: string;
+    action_item_count: number;
+  }[];
+  open_action_items: {
+    id: number;
+    description: string;
+    status: string;
+    due_date: string | null;
+    assignee: string | null;
+    meeting_id: number;
+    overdue: boolean;
+  }[];
+  open_todos: {
+    id: number;
+    title: string;
+    priority: string;
+    due_date: string | null;
+    overdue: boolean;
+  }[];
+}
+
 export interface TodoCreateInput {
   title: string;
   notes?: string | null;
